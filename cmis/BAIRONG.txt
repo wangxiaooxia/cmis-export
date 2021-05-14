@@ -1,0 +1,47 @@
+﻿{
+	"serialNumber": "ad73f7a46b6d48c583458ec96129bd1d",
+	"status": {
+		"code": "00000",
+		"desc": "cesf"
+	},
+	"decisionResult": {
+		"creditScore": "823",
+		"sosRiskLevel": "L",
+		"applyAmoun": "120000",
+		"borrFraudSerialNumber": "",
+		"applRcntIncome": "",
+		"borrRcntIncome": "",
+		"strategySerialNumber": "3003583_20200411141630_6925551EA19",
+		"applFraudSerialNumber": "3003583_20200411141624_1614411BA19",
+		"result": "1",
+		"hitRules": {
+			"ruleSet004": [
+				{
+					"ruleId": "R022",
+					"ruleDesc": "吃的",
+					"weights": "0"
+				}
+			],
+			"ruleSet007": [
+			],
+			"ruleSet004": [
+			],
+			"ruleSet005": [
+			],
+			"ruleSet002": [
+			],
+			"ruleSet003": [
+			],
+			"ruleSet001": [
+				{
+					"ruleId": "R005",
+					"ruleDesc": "得的",
+					"weights": "A"
+				}
+			]
+		},
+		"applFraudScore": "37",
+		"downPayment": "0.3",
+		"approvalPost": "E"
+	}
+}
