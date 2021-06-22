@@ -4,12 +4,16 @@ import com.alibaba.excel.EasyExcel;
 import com.cmis.export.entity.BizLine;
 import com.cmis.export.entity.XmlData;
 import com.cmis.export.service.ExportService;
+import lombok.val;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -42,5 +46,10 @@ public class ExportTest {
         String fileName = "D:\\Users\\hacker\\Desktop\\cmis.xlsx";
         EasyExcel.write(fileName, XmlData.class).sheet("cmis").doWrite(dataList);
 
+    }
+    @Test
+    public void testParseExcel(){
+        val read = EasyExcel.read(new File("F:\\parseexcel\\行业类别.xlsx"));
+        System.out.println(read.toString());
     }
 }

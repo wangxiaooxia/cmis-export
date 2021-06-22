@@ -7,5 +7,8 @@
     <select id="queryAll" resultType="com.cmis.export.entity.BizLine">
         select * from S_CONFIG_BIZ_LINE
     </select>
+    <select id="queryTreeDic" resultType="com.cmis.export.entity.BizLine">
+        select * from S_CONFIG_BIZ_LINE
+    </select>
 
 </mapper>

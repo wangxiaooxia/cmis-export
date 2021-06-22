@@ -46,6 +46,7 @@
             <artifactId>easyexcel</artifactId>
             <version>2.2.7</version>
         </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
