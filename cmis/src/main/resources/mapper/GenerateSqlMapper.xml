@@ -11,4 +11,24 @@
         </where>
     </select>
 
+    <select id="findSAreByName" resultType="com.cmis.export.entity.SArea">
+        select AREA_CODE from s_area
+        <where>
+            area_name = #{name} and area_type = #{type}
+        </where>
+    </select>
+    <select id="findSComCde" resultType="com.cmis.export.entity.SComCde">
+        select com_cde from s_com_cde
+        <where>
+            COM_DESC = #{name}
+        </where>
+    </select>
+    <select id="findScoopr" resultType="com.cmis.export.entity.Scoopr">
+        select COOPR_CDE from s_coopr
+        <where>
+            COOPR_NAME = #{name}
+        </where>
+    </select>
+
+
 </mapper>

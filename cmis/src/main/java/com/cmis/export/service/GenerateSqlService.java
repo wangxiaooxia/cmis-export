@@ -1,6 +1,9 @@
 package com.cmis.export.service;
 
+import com.cmis.export.entity.SArea;
+import com.cmis.export.entity.SComCde;
 import com.cmis.export.entity.STreeDic;
+import com.cmis.export.entity.Scoopr;
 import com.cmis.export.mapper.GenerateSqlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,4 +25,29 @@ public class GenerateSqlService {
     return sTreeDicList;
     }
 
+    /**
+     * 翻译地区字典项
+     * @param name
+     * @param type
+     * @return
+     */
+    public List<SArea> findSAreByName(String name,String type){
+        List<SArea> sTreeDicList = generateSqlMapper.findSAreByName(name,type);
+        return sTreeDicList;
+    }
+
+    /**
+     * 翻译通用字典项
+     * @param name
+     * @return
+     */
+    public List<SComCde> findSComCde(String name){
+        List<SComCde> sTreeDicList = generateSqlMapper.findSComCde(name);
+        return sTreeDicList;
+    }
+    public String findScoopr(String name){
+        List<Scoopr> sTreeDicList = generateSqlMapper.findScoopr(name);
+        String str = sTreeDicList.get(0).getCooprCde();
+        return str;
+    }
 }
