@@ -41,9 +41,10 @@ public class GenerateSqlService {
      * @param name
      * @return
      */
-    public List<SComCde> findSComCde(String name){
-        List<SComCde> sTreeDicList = generateSqlMapper.findSComCde(name);
-        return sTreeDicList;
+    public String findSComCde(String name,String type){
+        List<SComCde> sTreeDicList = generateSqlMapper.findSComCde(name,type);
+        String code = sTreeDicList.get(0).getComCde();
+        return code;
     }
     public String findScoopr(String name){
         List<Scoopr> sTreeDicList = generateSqlMapper.findScoopr(name);

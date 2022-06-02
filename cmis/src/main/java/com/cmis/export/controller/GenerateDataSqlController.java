@@ -1,8 +1,6 @@
 package com.cmis.export.controller;
 
 import com.cmis.export.entity.STreeDic;
-import com.cmis.export.mapper.GenerateSqlMapper;
-import com.cmis.export.service.ExportService;
 import com.cmis.export.service.GenerateSqlService;
 import com.cmis.export.util.ExcleUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +28,7 @@ public class GenerateDataSqlController {
      @GetMapping({"/gerertCooprSql"})
      public String gerertCooprSql(){
 
-         ExcleUtil.parseExcel("",generateSqlService);
+         ExcleUtil.parseExcel("F:\\平时工作\\任务相关\\2022年新任务\\5月\\uat.xlsx",generateSqlService);
         return "success";
      }
      @GetMapping({"/genertUserExtSql"})

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cmis.export.mapper.ExportMapper">
+
+    <select id="queryAll" resultType="com.cmis.export.entity.BizLine">
+        select * from S_CONFIG_BIZ_LINE
+    </select>
+    <select id="queryTreeDic" resultType="com.cmis.export.entity.BizLine">
+        select * from S_CONFIG_BIZ_LINE
+    </select>
+
+</mapper>

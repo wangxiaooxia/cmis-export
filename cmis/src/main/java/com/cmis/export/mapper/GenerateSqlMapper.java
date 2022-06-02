@@ -10,7 +10,7 @@ import java.util.List;
 public interface GenerateSqlMapper {
     List<STreeDic> findAll(String ss);
     List<SArea> findSAreByName(String name,String type);
-    List<SComCde> findSComCde(String name);
+    List<SComCde> findSComCde(String name,String type);
     List<Scoopr> findScoopr(String name);
 
 }
