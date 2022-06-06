@@ -29,6 +29,38 @@
             COOPR_NAME = #{name}
         </where>
     </select>
+    <select id="findSbch" resultType="com.cmis.export.entity.SBch">
+        select BCH_CDE from S_BCH
+        <where>
+            BCH_DESC = #{name}
+        </where>
+    </select>
 
+    <select id="findSUsr" resultType="com.cmis.export.entity.SUsr">
+        select USR_CDE from s_usr
+        <where>
+            USR_NAME = #{name} and usr_sts = 'A'
+        </where>
+    </select>
 
+    <select id="findSUsrN" resultType="com.cmis.export.entity.SUsr">
+        select USR_CDE from s_usr
+        <where>
+            USR_NAME = #{name}
+        </where>
+    </select>
+
+    <select id="findCooprGroup" resultType="java.util.Map">
+        select f.GROUP_CODE from S_COOPR_GROUP f
+        <where>
+            GROUP_DESC = #{name}
+        </where>
+    </select>
+
+    <select id="findServiceLine"    resultType="java.lang.String">
+      select DISTINCT f.CAR_TYPE  from S_CONFIG_BIZ_LINE f  where SERVICE_LINE in
+       <foreach collection="list" item="o" separator="," open="(" close=")">
+             #{o}
+       </foreach>
+    </select>
 </mapper>
