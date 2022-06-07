@@ -63,4 +63,10 @@
              #{o}
        </foreach>
     </select>
+    <select id="findAccName" resultType="java.util.Map">
+        select ACC_BANK_CDE from s_acc_bank where  ACC_BANK_NAME = #{name}  and bank_sts = 'A'
+    </select>
+    <select id="findCooprBrand" resultType="java.util.Map">
+        select  BRAND_CDE from S_BRAND where BRAND_NAM = #{name}  and BRAND_STS = '01'
+    </select>
 </mapper>

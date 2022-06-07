@@ -16,6 +16,8 @@ public interface GenerateSqlMapper {
     List<SUsr> findSUsrN(@Param("name") String name);
     Map findCooprGroup(@Param("name") String name);
     List<String> findServiceLine( List<String> list);
+    Map findAccName(@Param("name") String name);
+    Map findCooprBrand(@Param("name") String name);
 
 
 }

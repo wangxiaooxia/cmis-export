@@ -4,6 +4,7 @@ import com.cmis.export.service.GenerateSqlService;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -12,6 +13,8 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ExcleUtil {
+    @Autowired
+    private GenerateSqlService generateSqlService;
     public static void parseExcel(String filePath, GenerateSqlService generateSqlService) {
         Workbook wb;
         Sheet sheet = null;
@@ -52,8 +55,9 @@ public class ExcleUtil {
                     break;
                 }
 
-                String biz = "";
-                String bussinessScope = "";
+                String biz = ""; //业务条线sql
+                String bussinessScope = ""; //业务范围
+
                 //生成sql脚本
                 if (map.get("service_line").contains("，")) {
                     Map<String,String> map1 = getMap(map.get("service_line"));
@@ -91,16 +95,16 @@ public class ExcleUtil {
                         "SUB_REGI, REG_MANA, SUB_AREA, AREA_MANA, " +
                         " STOR_ARCH, COOPR_TYP_CLASS, PER_PHA_GUA_AGRE, ORG_PHA_GUA_AGRE, AUTH_FACE_AGRE," +
                         " FAX_NO,FILE_RE_ADD_TYP, COOPR_RE_PROVINCE, COOPR_RE_CITY, COOPR_RE_AREA, COOPR_RE_ADDR, AC_ALIPAY_NO, " +
-                        "RISK_FLAG_SEC, BUSI_SCOPE, SPECIAL_COM, ROLE_RANGE, AC_PROVINCE, SETTLE_PROVE_TYPE, TAXPAYER_ID_NUMBER," +
+                        "RISK_FLAG_SEC, BUSI_SCOPE, SPECIAL_COM, ROLE_RANGE, AC_PROVINCE, BANK_NUMBER,SETTLE_PROVE_TYPE, TAXPAYER_ID_NUMBER," +
                         " RECIPIENT, RECIPIENT_TEL, BUSINESS_LEGAL, BUSINESS_LEGAL_TEL, BUSINESS_START_DT, BUSINESS_CAPITAL_AMT," +
                         " BUSINESS_PROVINCE, BUSINESS_CITY, BUSINESS_AREA, BUSINESS_ADDRESS, BUSINESS_ZIP_CODE, GROUP_CODE, GROUP_DESC," +
-                        " INTER_BANK_PAY,IS_OWN_ACCT)" +
+                        " INTER_BANK_PAY)" +
                         "VALUES('"+getCooprSeq(sum)+"','" + map.get("coopr_cde") + "','" + map.get("coopr_name") + "','07','02','" + findSbch(map.get("direct_bch"),generateSqlService) + "','"
                         + map.get("str_dt") + "','" + map.get("end_dt") + "','" + findSComCde(map.get("coopr_sts"), generateSqlService, "COOPR_STS") + "','" + findPace(map.get("coopr_province"),generateSqlService,"province" )+ "','"
                         +findPace(map.get("coopr_city"),generateSqlService,"city") +
                         "','" +findPace( map.get("coopr_area"),generateSqlService,"area") + "','" + map.get("coopr_addr") + "','" + map.get("coopr_zip_cde") + "','" + map.get("coopr_contact_email") + "','" + map.get("cont_tel") +
-                        "','" + map.get("fax_zone") + "','" + map.get("corporate_name") + "','CNY','" + map.get("acct_name") + "','" + map.get("bank_nam") + "','" + map.get("bank_nam") +
-                        "','" + map.get("BCH_CDE") + "','" + map.get("bch_nam") + "','" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "','900000000','','','" +
+                        "','" + map.get("fax_zone") + "','" + map.get("corporate_name") + "','CNY','" + map.get("acct_name") + "','" + findAccName(map.get("bank_nam"),generateSqlService) + "','" + map.get("bank_nam") +
+                        "','" + findAccName(map.get("bank_nam") ,generateSqlService)+ "','" + map.get("bch_nam") + "',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'900000000','','Y','" +
                         findSComCde(map.get("coopr_typ"), generateSqlService, "COOPR_TYP") + "','" + map.get("risk_flag") + "','" + map.get("cont_no") + "','" + map.get("gurt_amt") + "','" + map.get("card_no") +
                         "','" + map.get("coopr_cde") + "','" + map.get("cred_com") + "','" + map.get("sales_rep") + "','" + map.get("mar_coe") + "','" + map.get("bef_amount") +
                         "','" + findSComCde(map.get("meth_red"), generateSqlService, "METH_RED") + "','" + findSComCde(map.get("whol_bus"), generateSqlService, "SIG_STATUS") + "','" + map.get("reco_period") + "','" + map.get("witn_desc") + "','" + map.get("pay_number") +
@@ -109,12 +113,12 @@ public class ExcleUtil {
                         findSComCde(map.get("org_pha_gua_agre"), generateSqlService, "SIG_STATUS") + "','" + findSComCde(map.get("auth_face_agre"), generateSqlService, "SIG_STATUS") +
                         "','" + map.get("fax_no") + "','" + findSComCde(map.get("file_re_add_typ"), generateSqlService, "FILE_RE_ADD_TYP") + "','" + findPace(map.get("coopr_re_province"),generateSqlService,"province") + "','" + findPace(map.get("coopr_re_city"),generateSqlService,"city") + "','" + findPace(map.get("coopr_re_area"),generateSqlService,"area") +
                         "','" + map.get("coopr_re_addr") + "','" + map.get("ac_alipay_no") + "','" + map.get("risk_flag_sec") + "','" + bussinessScope + "','" + map.get("special_com") +
-                        "','" + changeRoleRange(map.get("role_range")) + "','" + map.get("ac_province") + "','" + findSComCde(map.get("settle_prove_type"), generateSqlService, "SETTLE_PROVE_TYPE") + "','" + map.get("taxpayer_id_number") + "','" + map.get("recipient") +
+                        "','" + changeRoleRange(map.get("role_range")) + "','" + map.get("ac_province") + "','"+map.get("bank_number")+"','" + findSComCde(map.get("settle_prove_type"), generateSqlService, "SETTLE_PROVE_TYPE") + "','" + map.get("taxpayer_id_number") + "','" + map.get("recipient") +
                         "','" + map.get("recipient_tel") + "','" + map.get("business_legal") + "','" + map.get("business_legal_tel") + "','" + map.get("business_start_dt") + "','" + map.get("business_capital_amt") +
                         "','" + findPace(map.get("business_province"),generateSqlService,"province") + "','" + findPace(map.get("business_city"),generateSqlService,"city") + "','" + findPace(map.get("business_area"),generateSqlService,"area") + "','" + map.get("business_address") + "','" + map.get("business_zip_code") +
-                        "','" + findCooprGroup(map.get("group_desc"),generateSqlService) + "','" + map.get("group_desc") + "','" + isYesOrNo(map.get("inter_bank_pay")) + "','Y');";
+                        "','" + findCooprGroup(map.get("group_desc"),generateSqlService) + "','" + map.get("group_desc") + "','" + isYesOrNo(map.get("inter_bank_pay")) + "');";
 
-
+                //生成渠道端脚本
                 String contentN = "INSERT INTO CF_COOPR" +
                         "(CO_INSTUCDE, CO_COOPRSEQ, CO_COOPRCDE, CO_COOPRNAME, CO_COOPRKIND, CO_COOPRLVL, CO_DIRECTBCH," +
                         " CO_COOPRSTRDT, CO_COOPRENDDT, CO_COOPRSTS, CO_CAPITALAMT, CO_COOPRPROVINCE, CO_COOPRCITY, " +
@@ -126,14 +130,30 @@ public class ExcleUtil {
                         "','"+map.get("coopr_zip_cde")+ "','"+map.get("coopr_contact_email") + "','" + map.get("cont_tel") +"','" + map.get("fax_zone") +"','"+ bussinessScope +
                         "','"+findSComCde(map.get("coopr_typ"), generateSqlService, "COOPR_TYP") +"','"+map.get("risk_flag")+"','"+map.get("risk_flag_sec")+"');";
 
+                //车型审批端脚本
+                String cooprCde = generateSqlService.findCooprBrand(map.get("code"));//经销商品牌信息
+                String cooprBrand = "insert into S_COOPR_BRAND s (s.BRAND_SEQ,s.COOPR_CDE,s.BRAND_CDE,s.LAST_CHG_DT,s.LAST_CHG_USR) values " +
+                        "('"+getCooprSeq(sum)+"','"+map.get("coopr_cde")+"','"+cooprCde+"',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin');";
+                //车型渠道端脚本
+                String cooprBrandQd = "insert into CF_COOPR_BRAND s (s.CO_BRANDSEQ,s.CO_COOPRCDE,s.CO_BRANDCDE,s.CO_LASTCHGDT,s.CO_LASTCHGUSR) values " +
+                        "('"+getCooprSeq(sum)+"','"+map.get("coopr_cde")+"','"+cooprCde+"',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin');";
+
+
                 //生成sql脚本
-                FileOutputStream fos = null;
-                FileOutputStream fosN = null;
+                FileOutputStream fos = null; //审批端脚本
+                FileOutputStream fosN = null; //渠道端脚本
+
+                FileOutputStream fosCooprS = null; //审批端脚本
+                FileOutputStream fosNCooprQ = null; //渠道端脚本
 
                 try {
                     // true代表叠加写入，没有则代表清空一次写一次
                     fos = new FileOutputStream("F:\\2022jiaoben\\s_coopr.sql", true);
                     fosN = new FileOutputStream("F:\\2022jiaoben\\cf_coopr.sql", true);
+
+                    fosCooprS = new FileOutputStream("F:\\2022jiaoben\\s_coopr_brand.sql", true);
+                    fosNCooprQ = new FileOutputStream("F:\\2022jiaoben\\cf_coopr_brand.sql", true);
+
                     byte[] bytes = content.getBytes();
                     fos.write(bytes);
                     // 换行
@@ -144,6 +164,16 @@ public class ExcleUtil {
                     // 换行
                     fosN.write("\r\n".getBytes());
 
+                    byte[] bytesNN = cooprBrand.getBytes();
+                    fosCooprS.write(bytesNN);
+                    // 换行
+                    fosCooprS.write("\r\n".getBytes());
+
+                    byte[] bytesNNN = cooprBrandQd.getBytes();
+                    fosNCooprQ.write(bytesNNN);
+                    // 换行
+                    fosNCooprQ.write("\r\n".getBytes());
+
 
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
@@ -153,6 +183,8 @@ public class ExcleUtil {
                     try {
                         fos.close();
                         fosN.close();
+                        fosCooprS.close();
+                        fosNCooprQ.close();
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -263,7 +295,7 @@ public class ExcleUtil {
                         " ID_CARD_TEMP_PATH, CANCEL_DT)" +
                         " VALUES('900000000','" + map.get("usr_cde") + "','" + map.get("usr_name") + "','20','" + isYesOrNo(map.get("id_is_temporary")) + "','" + map.get("usr_id_no")
                         + "','" + map.get("usr_tel") + "','" + map.get("usr_email") + "','" + queryScooprCde(map.get("usr_bch"), generateSqlService) + "','A','" + map.get("usr_rmk") +
-                        "','" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "','admin','01','01','admin','" +
+                        "',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin','01','01','admin','" +
                         new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "','','','N','','');";
 
                 String contentN = "INSERT INTO CF_SALERINF" +
@@ -272,7 +304,7 @@ public class ExcleUtil {
                         " IS_TEMPORARY_ID, IS_UPLOAD_IMAGE,CSI_LASTPWDMODDATE)" +
                         "VALUES('" + map.get("usr_cde") + "','a172ffc990129fe6f68b50f6037c54a1894ee3fd','900000000','" + queryScooprCde(map.get("usr_bch"), generateSqlService) +
                         "','" + map.get("usr_name") + "','','" + map.get("usr_id_no") + "','" + map.get("usr_tel")
-                        + "','','01','01','A','" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(new Date()) + "','admin','" + isYesOrNo(map.get("id_is_temporary")) + "','N','" + new SimpleDateFormat("yyyy-MM-dd").format(new Date()) + "');";
+                        + "','','01','01','A',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin','" + isYesOrNo(map.get("id_is_temporary")) + "','N',to_char(sysdate,'yyyy-MM-dd'));";
 
                 //生成sql脚本
                 FileOutputStream fos = null;
@@ -363,6 +395,11 @@ public class ExcleUtil {
     }
     private static String findCooprGroup(String str, GenerateSqlService generateSqlService) {
         String ss = generateSqlService.findCooprGroup(str);
+        return ss;
+    }
+
+    private static String findAccName(String str, GenerateSqlService generateSqlService) {
+        String ss = generateSqlService.findAccName(str);
         return ss;
     }
     private static String changeRoleRange(String roleRange) {

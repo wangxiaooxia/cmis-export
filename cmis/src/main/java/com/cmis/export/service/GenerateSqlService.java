@@ -95,7 +95,22 @@ public class GenerateSqlService {
         List<String> sTreeDicList = generateSqlMapper.findServiceLine(list);
         return listToString(sTreeDicList,",");
     }
-
+    public String findAccName(String name){
+        Map sTreeDicList = generateSqlMapper.findAccName(name);
+        String code = "";
+        if (sTreeDicList.size() > 0){
+            code = (String) sTreeDicList.get("ACC_BANK_CDE");
+        }
+        return code;
+    }
+    public String findCooprBrand(String name){
+        Map sTreeDicList = generateSqlMapper.findCooprBrand(name);
+        String code = "";
+        if (sTreeDicList.size() > 0){
+            code = (String) sTreeDicList.get("BRAND_CDE");
+        }
+        return code;
+    }
     public static String listToString(List<String> list,String separator){
         StringBuffer listString = new StringBuffer();
         if (list != null && list.size() > 0) {
