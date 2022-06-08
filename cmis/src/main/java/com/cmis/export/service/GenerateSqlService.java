@@ -53,7 +53,10 @@ public class GenerateSqlService {
     }
     public String findScoopr(String name){
         List<Scoopr> sTreeDicList = generateSqlMapper.findScoopr(name);
-        String str = sTreeDicList.get(0).getCooprCde();
+        String str = "";
+        if (sTreeDicList.size() >0){
+             str = sTreeDicList.get(0).getCooprCde();
+        }
         return str;
     }
 
@@ -85,7 +88,7 @@ public class GenerateSqlService {
     public String findCooprGroup(String name){
         Map sTreeDicList = generateSqlMapper.findCooprGroup(name);
         String code = "";
-        if (sTreeDicList.size() > 0){
+        if (sTreeDicList != null){
             code = (String) sTreeDicList.get("GROUP_CODE");
         }
         return code;
@@ -98,7 +101,7 @@ public class GenerateSqlService {
     public String findAccName(String name){
         Map sTreeDicList = generateSqlMapper.findAccName(name);
         String code = "";
-        if (sTreeDicList.size() > 0){
+        if ( sTreeDicList != null ){
             code = (String) sTreeDicList.get("ACC_BANK_CDE");
         }
         return code;
@@ -106,7 +109,7 @@ public class GenerateSqlService {
     public String findCooprBrand(String name){
         Map sTreeDicList = generateSqlMapper.findCooprBrand(name);
         String code = "";
-        if (sTreeDicList.size() > 0){
+        if ( sTreeDicList != null ){
             code = (String) sTreeDicList.get("BRAND_CDE");
         }
         return code;
