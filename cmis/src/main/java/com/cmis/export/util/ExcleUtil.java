@@ -117,6 +117,33 @@ public class ExcleUtil {
                         "','" + map.get("recipient_tel") + "','" + map.get("business_legal") + "','" + map.get("business_legal_tel") + "','" + map.get("business_start_dt") + "','" + map.get("business_capital_amt") +
                         "','" + findPace(map.get("business_province"),generateSqlService,"province") + "','" + findPace(map.get("business_city"),generateSqlService,"city") + "','" + findPace(map.get("business_area"),generateSqlService,"area") + "','" + map.get("business_address") + "','" + map.get("business_zip_code") +
                         "','" + findCooprGroup(map.get("group_desc"),generateSqlService) + "','" + map.get("group_desc") + "','" + isYesOrNo(map.get("inter_bank_pay")) + "');";
+                //生成贷后脚本
+                String contentDh = "INSERT INTO S_COOPR(COOPR_SEQ, COOPR_CDE, COOPR_NAME, COOPR_KIND, COOPR_LVL, " +
+                        "DIRECT_BCH, COOPR_STR_DT, COOPR_END_DT, COOPR_STS, COOPR_PROVINCE, COOPR_CITY, COOPR_AREA," +
+                        " COOPR_ADDR, COOPR_ZIP_CDE, COOPR_CONTACT_EMAIL, CONT_TEL, FAX_ZONE, CORPORATE_NAME, " +
+                        "ACCT_CCY,ACCT_NAME, BANK_CDE, BANK_NAM, BCH_CDE, BCH_NAM, LAST_CHG_DT, INSTU_CDE, " +
+                        "IS_DIRECT_PAY, IS_OWN_ACCT, COOPR_TYP, RISK_FLAG, CONT_NO, GURT_AMT, CARD_NO, LEVEL_TREE, " +
+                        "CRED_COM, SALES_REP, MAR_COE, BEF_AMOUNT, METH_RED, WHOL_BUS, RECO_PERIOD, WITN_DESC, PAY_NUMBER, ZIP_CODE, " +
+                        "SUB_REGI, REG_MANA, SUB_AREA, AREA_MANA, " +
+                        " STOR_ARCH, COOPR_TYP_CLASS, PER_PHA_GUA_AGRE, ORG_PHA_GUA_AGRE, AUTH_FACE_AGRE," +
+                        " FAX_NO,FILE_RE_ADD_TYP, COOPR_RE_PROVINCE, COOPR_RE_CITY, COOPR_RE_AREA, COOPR_RE_ADDR, AC_ALIPAY_NO, " +
+                        "RISK_FLAG_SEC, BUSI_SCOPE, SETTLE_PROVE_TYPE, TAXPAYER_ID_NUMBER)" +
+                        "VALUES('"+getCooprSeq(sum)+"','" + map.get("coopr_cde") + "','" + map.get("coopr_name") + "','07','02','" + findSbch(map.get("direct_bch"),generateSqlService) + "','"
+                        + map.get("str_dt") + "','" + map.get("end_dt") + "','" + findSComCde(map.get("coopr_sts"), generateSqlService, "COOPR_STS") + "','" + findPace(map.get("coopr_province"),generateSqlService,"province" )+ "','"
+                        +findPace(map.get("coopr_city"),generateSqlService,"city") +
+                        "','" +findPace( map.get("coopr_area"),generateSqlService,"area") + "','" + map.get("coopr_addr") + "','" + map.get("coopr_zip_cde") + "','" + map.get("coopr_contact_email") + "','" + map.get("cont_tel") +
+                        "','" + map.get("fax_zone") + "','" + map.get("corporate_name") + "','CNY','" + map.get("acct_name") + "','" + findAccName(map.get("bank_nam"),generateSqlService) + "','" + map.get("bank_nam") +
+                        "','" + findAccName(map.get("bank_nam") ,generateSqlService)+ "','" + map.get("bch_nam") + "',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'900000000','','Y','" +
+                        findSComCde(map.get("coopr_typ"), generateSqlService, "COOPR_TYP") + "','" + map.get("risk_flag") + "','" + map.get("cont_no") + "','" + map.get("gurt_amt") + "','" + map.get("card_no") +
+                        "','" + map.get("coopr_cde") + "','" + map.get("cred_com") + "','" + map.get("sales_rep") + "','" + map.get("mar_coe") + "','" + map.get("bef_amount") +
+                        "','" + findSComCde(map.get("meth_red"), generateSqlService, "METH_RED") + "','" + findSComCde(map.get("whol_bus"), generateSqlService, "SIG_STATUS") + "','" + map.get("reco_period") + "','" + map.get("witn_desc") + "','" + map.get("pay_number") +
+                        "','" + map.get("zip_code") + "','" + findSbch(map.get("direct_bch"),generateSqlService) + "','" + findSUsr( map.get("reg_mana"),generateSqlService) + "','" +findSbch(map.get("sub_area"),generateSqlService) + "','" + findSUsrN( map.get("area_mana"),generateSqlService) +
+                        "','01','" + findSComCde(map.get("coopr_typ_class"), generateSqlService, "DEAL_TYP") + "','" + findSComCde(map.get("per_pha_gua_agre"), generateSqlService, "SIG_STATUS") + "','" +
+                        findSComCde(map.get("org_pha_gua_agre"), generateSqlService, "SIG_STATUS") + "','" + findSComCde(map.get("auth_face_agre"), generateSqlService, "SIG_STATUS") +
+                        "','" + map.get("fax_no") + "','" + findSComCde(map.get("file_re_add_typ"), generateSqlService, "FILE_RE_ADD_TYP") + "','" + findPace(map.get("coopr_re_province"),generateSqlService,"province") + "','" + findPace(map.get("coopr_re_city"),generateSqlService,"city") + "','" + findPace(map.get("coopr_re_area"),generateSqlService,"area") +
+                        "','" + map.get("coopr_re_addr") + "','" + map.get("ac_alipay_no") + "','" + map.get("risk_flag_sec") + "','" + bussinessScope + "','" + findSComCde(map.get("settle_prove_type"), generateSqlService, "SETTLE_PROVE_TYPE") + "','" + map.get("taxpayer_id_number") + "');";
+
+
 
                 //生成渠道端脚本
                 String contentN = "INSERT INTO CF_COOPR" +
@@ -142,6 +169,8 @@ public class ExcleUtil {
                 //生成sql脚本
                 FileOutputStream fos = null; //审批端脚本
                 FileOutputStream fosN = null; //渠道端脚本
+                FileOutputStream fosDH = null; //贷后审批端脚本
+
 
                 FileOutputStream fosCooprS = null; //审批端脚本
                 FileOutputStream fosNCooprQ = null; //渠道端脚本
@@ -150,6 +179,7 @@ public class ExcleUtil {
                     // true代表叠加写入，没有则代表清空一次写一次
                     fos = new FileOutputStream("F:\\2022jiaoben\\s_coopr.sql", true);
                     fosN = new FileOutputStream("F:\\2022jiaoben\\cf_coopr.sql", true);
+                    fosDH = new FileOutputStream("F:\\2022jiaoben\\s_coopr_dh.sql", true);
 
                     fosCooprS = new FileOutputStream("F:\\2022jiaoben\\s_coopr_brand.sql", true);
                     fosNCooprQ = new FileOutputStream("F:\\2022jiaoben\\cf_coopr_brand.sql", true);
@@ -163,6 +193,13 @@ public class ExcleUtil {
                     fosN.write(bytesN);
                     // 换行
                     fosN.write("\r\n".getBytes());
+
+
+                    byte[] contentDhB = contentDh.getBytes();
+                    fosDH.write(contentDhB);
+                    // 换行
+                    fosDH.write("\r\n".getBytes());
+
 
                     byte[] bytesNN = cooprBrand.getBytes();
                     fosCooprS.write(bytesNN);
@@ -183,6 +220,7 @@ public class ExcleUtil {
                     try {
                         fos.close();
                         fosN.close();
+                        fosDH.close();
                         fosCooprS.close();
                         fosNCooprQ.close();
                     } catch (IOException e) {
