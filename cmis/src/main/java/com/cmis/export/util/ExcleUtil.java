@@ -14,7 +14,7 @@ import java.util.*;
 
 public class ExcleUtil {
     @Autowired
-    private GenerateSqlService generateSqlService;
+    private  GenerateSqlService generateSqlService;
     public static void parseExcel(String filePath, GenerateSqlService generateSqlService) {
         Workbook wb;
         Sheet sheet = null;
@@ -84,7 +84,7 @@ public class ExcleUtil {
                        }
                     }
                 }
-
+                String seq = getCooprSeq(generateSqlService); //&&&&&&注意这个是查询的序列，脚本执行时，生成的序列需要和uat的序列保持一致，不然会出现冲突&&&&&&&&&&
                 //生成审批端脚本
                 String content = "INSERT INTO S_COOPR(COOPR_SEQ, COOPR_CDE, COOPR_NAME, COOPR_KIND, COOPR_LVL, " +
                         "DIRECT_BCH, COOPR_STR_DT, COOPR_END_DT, COOPR_STS, COOPR_PROVINCE, COOPR_CITY, COOPR_AREA," +
@@ -99,7 +99,7 @@ public class ExcleUtil {
                         " RECIPIENT, RECIPIENT_TEL, BUSINESS_LEGAL, BUSINESS_LEGAL_TEL, BUSINESS_START_DT, BUSINESS_CAPITAL_AMT," +
                         " BUSINESS_PROVINCE, BUSINESS_CITY, BUSINESS_AREA, BUSINESS_ADDRESS, BUSINESS_ZIP_CODE, GROUP_CODE, GROUP_DESC," +
                         " INTER_BANK_PAY)" +
-                        "VALUES('"+getCooprSeq(sum)+"','" + map.get("coopr_cde") + "','" + map.get("coopr_name") + "','07','02','" + findSbch(map.get("direct_bch"),generateSqlService) + "','"
+                        "VALUES('"+seq+"','" + map.get("coopr_cde") + "','" + map.get("coopr_name") + "','07','02','" + findSbch(map.get("direct_bch"),generateSqlService) + "','"
                         + map.get("str_dt") + "','" + map.get("end_dt") + "','" + findSComCde(map.get("coopr_sts"), generateSqlService, "COOPR_STS") + "','" + findPace(map.get("coopr_province"),generateSqlService,"province" )+ "','"
                         +findPace(map.get("coopr_city"),generateSqlService,"city") +
                         "','" +findPace( map.get("coopr_area"),generateSqlService,"area") + "','" + map.get("coopr_addr") + "','" + map.get("coopr_zip_cde") + "','" + map.get("coopr_contact_email") + "','" + map.get("cont_tel") +
@@ -128,7 +128,7 @@ public class ExcleUtil {
                         " STOR_ARCH, COOPR_TYP_CLASS, PER_PHA_GUA_AGRE, ORG_PHA_GUA_AGRE, AUTH_FACE_AGRE," +
                         " FAX_NO,FILE_RE_ADD_TYP, COOPR_RE_PROVINCE, COOPR_RE_CITY, COOPR_RE_AREA, COOPR_RE_ADDR, AC_ALIPAY_NO, " +
                         "RISK_FLAG_SEC, BUSI_SCOPE, SETTLE_PROVE_TYPE, TAXPAYER_ID_NUMBER)" +
-                        "VALUES('"+getCooprSeq(sum)+"','" + map.get("coopr_cde") + "','" + map.get("coopr_name") + "','07','02','" + findSbch(map.get("direct_bch"),generateSqlService) + "','"
+                        "VALUES('"+seq+"','" + map.get("coopr_cde") + "','" + map.get("coopr_name") + "','07','02','" + findSbch(map.get("direct_bch"),generateSqlService) + "','"
                         + map.get("str_dt") + "','" + map.get("end_dt") + "','" + findSComCde(map.get("coopr_sts"), generateSqlService, "COOPR_STS") + "','" + findPace(map.get("coopr_province"),generateSqlService,"province" )+ "','"
                         +findPace(map.get("coopr_city"),generateSqlService,"city") +
                         "','" +findPace( map.get("coopr_area"),generateSqlService,"area") + "','" + map.get("coopr_addr") + "','" + map.get("coopr_zip_cde") + "','" + map.get("coopr_contact_email") + "','" + map.get("cont_tel") +
@@ -150,7 +150,7 @@ public class ExcleUtil {
                         "(CO_INSTUCDE, CO_COOPRSEQ, CO_COOPRCDE, CO_COOPRNAME, CO_COOPRKIND, CO_COOPRLVL, CO_DIRECTBCH," +
                         " CO_COOPRSTRDT, CO_COOPRENDDT, CO_COOPRSTS, CO_CAPITALAMT, CO_COOPRPROVINCE, CO_COOPRCITY, " +
                         "CO_COOPRAREA, CO_COOPRADDR, CO_COOPRZIPCDE, CO_COOPRCONTACTEMAIL, CO_CONTTEL, CO_FAXZONE,CO_BUSI_SCOPE, CO_COOPRTYP, CO_RISKFLAG,CO_RISKFLAGSEC)" +
-                        "VALUES('900000000','"+getCooprSeq(sum)+"','"+ map.get("coopr_cde") +"','"+ map.get("coopr_name") +"','07','02','"+findSbch(map.get("direct_bch"),generateSqlService)+
+                        "VALUES('900000000','"+seq+"','"+ map.get("coopr_cde") +"','"+ map.get("coopr_name") +"','07','02','"+findSbch(map.get("direct_bch"),generateSqlService)+
                         "','"+map.get("str_dt") + "','" + map.get("end_dt") +"','"+ findSComCde(map.get("coopr_sts"), generateSqlService, "COOPR_STS") +
                         "','"+map.get("business_capital_amt")+"','"+ findPace(map.get("coopr_province"),generateSqlService,"province" )+ "','"
                         +findPace(map.get("coopr_city"),generateSqlService,"city") + "','" +findPace( map.get("coopr_area"),generateSqlService,"area") + "','" + map.get("coopr_addr") +
@@ -160,10 +160,10 @@ public class ExcleUtil {
                 //车型审批端脚本
                 String cooprCde = generateSqlService.findCooprBrand(map.get("code"));//经销商品牌信息
                 String cooprBrand = "insert into S_COOPR_BRAND s (s.BRAND_SEQ,s.COOPR_CDE,s.BRAND_CDE,s.LAST_CHG_DT,s.LAST_CHG_USR) values " +
-                        "('"+getCooprSeq(sum)+"','"+map.get("coopr_cde")+"','"+cooprCde+"',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin');";
+                        "('"+seq+"','"+map.get("coopr_cde")+"','"+cooprCde+"',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin');";
                 //车型渠道端脚本
                 String cooprBrandQd = "insert into CF_COOPR_BRAND s (s.CO_BRANDSEQ,s.CO_COOPRCDE,s.CO_BRANDCDE,s.CO_LASTCHGDT,s.CO_LASTCHGUSR) values " +
-                        "('"+getCooprSeq(sum)+"','"+map.get("coopr_cde")+"','"+cooprCde+"',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin');";
+                        "('"+seq+"','"+map.get("coopr_cde")+"','"+cooprCde+"',to_char(sysdate,'yyyy-MM-dd HH24:mi:ss'),'admin');";
 
 
                 //生成sql脚本
@@ -482,7 +482,8 @@ public class ExcleUtil {
         return map;
     }
 
-    public static BigDecimal getCooprSeq(BigDecimal cooprSeq) {
+    public static String getCooprSeq(GenerateSqlService generateSqlService) {
+        String cooprSeq = (generateSqlService.findSeq());
         try{
             //增加渠道编号和年月的处理
             Date date=new Date();
@@ -497,7 +498,7 @@ public class ExcleUtil {
                 }
             }
             seq="10"+time+seq;
-            cooprSeq=new BigDecimal(seq);//
+            cooprSeq= String.valueOf(seq);//
         }catch (Exception e) {
         }
         return cooprSeq;

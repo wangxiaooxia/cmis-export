@@ -14,10 +14,10 @@ public interface GenerateSqlMapper {
     List<SBch> findSbch(@Param("name") String name);
     List<SUsr> findSUsr(@Param("name") String name);
     List<SUsr> findSUsrN(@Param("name") String name);
-    Map findCooprGroup(@Param("name") String name);
+    List<String>  findCooprGroup(@Param("name") String name);
     List<String> findServiceLine( List<String> list);
     Map findAccName(@Param("name") String name);
     Map findCooprBrand(@Param("name") String name);
-
+    Map findSeq();
 
 }

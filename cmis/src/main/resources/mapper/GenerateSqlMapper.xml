@@ -50,10 +50,10 @@
         </where>
     </select>
 
-    <select id="findCooprGroup" resultType="java.util.Map">
+    <select id="findCooprGroup" resultType="java.lang.String">
         select f.GROUP_CODE from S_COOPR_GROUP f
         <where>
-            GROUP_DESC = #{name}
+            GROUP_DESC = #{name}  and rownum =1
         </where>
     </select>
 
@@ -67,6 +67,9 @@
         select ACC_BANK_CDE from s_acc_bank where  ACC_BANK_NAME = #{name}  and bank_sts = 'A'
     </select>
     <select id="findCooprBrand" resultType="java.util.Map">
-        select  BRAND_CDE from S_BRAND where BRAND_NAM = #{name}  and BRAND_STS = '01'
+        select  BRAND_CDE from S_BRAND where BRAND_NAM = #{name}  and BRAND_STS = '01' and rownum =1
+    </select>
+    <select id="findSeq" resultType="java.util.Map">
+        select COOPR_GL_SERNO.Nextval SEQ from dual
     </select>
 </mapper>

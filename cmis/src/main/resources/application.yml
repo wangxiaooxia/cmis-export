@@ -4,7 +4,7 @@ server:
 spring:
   datasource:
     driver-class-name: oracle.jdbc.driver.OracleDriver
-    url: jdbc:oracle:thin:@192.168.7.156:1521:rtlfo30
+    url: jdbc:oracle:thin:@192.168.7.35:1521:rtlfo20
     username: cmis
     password: cmis
 

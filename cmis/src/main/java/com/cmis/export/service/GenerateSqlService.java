@@ -5,6 +5,7 @@ import com.cmis.export.mapper.GenerateSqlMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Map;
 
@@ -86,10 +87,10 @@ public class GenerateSqlService {
     }
 
     public String findCooprGroup(String name){
-        Map sTreeDicList = generateSqlMapper.findCooprGroup(name);
+        List<String> sTreeDicList = generateSqlMapper.findCooprGroup(name);
         String code = "";
-        if (sTreeDicList != null){
-            code = (String) sTreeDicList.get("GROUP_CODE");
+        if (sTreeDicList.size() > 0){
+            code = (String) sTreeDicList.get(0);
         }
         return code;
     }
@@ -111,6 +112,14 @@ public class GenerateSqlService {
         String code = "";
         if ( sTreeDicList != null ){
             code = (String) sTreeDicList.get("BRAND_CDE");
+        }
+        return code;
+    }
+    public String findSeq(){
+        Map sTreeDicList = generateSqlMapper.findSeq();
+        String code = "";
+        if ( sTreeDicList != null ){
+            code = String.valueOf(new BigDecimal(String.valueOf(sTreeDicList.get("SEQ"))));
         }
         return code;
     }
